@@ -46,6 +46,11 @@ class TransactionController {
   }
 
   static updatePutATransaction(req, res) {
+    console.log("wey");
+    if (req.body.field === "booklist") {
+      req.body.value = req.body.value.split(",")
+    }
+    console.log(req.body.value);
     Transaction.findOneAndUpdate({
       _id: req.body._id
     }, {
@@ -63,6 +68,9 @@ class TransactionController {
   }
 
   static updatePatchATransaction(req, res) {
+    if (req.body.field === "booklist") {
+      req.body.value = req.body.value.split(",")
+    }
     Transaction.findOneAndUpdate({
       _id: req.body._id
     }, {
