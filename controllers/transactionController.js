@@ -2,16 +2,33 @@ const { Transaction } = require("../models")
 
 class TransactionController {
   static getAllTransactions(req, res) {
-    let objSearch = {}
-    Transaction.find(objSearch)
-    .populate("member")
-    .populate("booklist")
-    .then(transactions => {
-      res.status(200).json(transactions)
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+    if (req.query.isbn) {
+      Transaction.find({})
+      .populate("member")
+      .populate({
+        path: "booklist",
+        match: {
+          isbn: req.query.isbn
+        }
+      })
+      .then(transactions => {
+        res.status(200).json(transactions)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+    }
+    else {
+      Transaction.find({})
+      .populate("member")
+      .populate("booklist")
+      .then(transactions => {
+        res.status(200).json(transactions)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+    }
   }
 
   static createATransaction(req, res) {
@@ -46,11 +63,9 @@ class TransactionController {
   }
 
   static updatePutATransaction(req, res) {
-    console.log("wey");
     if (req.body.field === "booklist") {
       req.body.value = req.body.value.split(",")
     }
-    console.log(req.body.value);
     Transaction.findOneAndUpdate({
       _id: req.body._id
     }, {
