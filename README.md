@@ -39,6 +39,7 @@
 | `api/books?author=<author>` | GET | `none` | `none` | Get all books info by the author |
 | `api/books?title=<title>` | GET | `none` | `none` | Get all books info by the title |
 | `api/books?author=<author>&title=<title>` OR `api/books?title=<title>&author=<author>` | GET | `none` | `none` | Get all books info by the author and the title |
+| `api/transactions?isbn=<isbn>` | GET | `none` | `none` | Get all transactions info by the book's ISBN |
 
 ## Usage
 
